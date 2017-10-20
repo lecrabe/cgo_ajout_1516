@@ -56,7 +56,7 @@ writeOGR(utm_perte_2015,"integrate_1516/utm_perte_2015.shp","utm_perte_2015","ES
 
 ##########################################################################################
 ## Rasteriser les routes 2016
-system(sprintf("oft-rasterize_attr.py -v %s -o %s -i %s -a %s",
+system(sprintf("python oft-rasterize_attr.py -v %s -o %s -i %s -a %s",
                "integrate_1516/utm_route_2016.shp",
                "integrate_1516/utm_route_2016.tif",
                "facet_2000_2014_filtrage5.tif",
@@ -64,7 +64,7 @@ system(sprintf("oft-rasterize_attr.py -v %s -o %s -i %s -a %s",
 
 ##########################################################################################
 ## Rasteriser les pertes 2016
-system(sprintf("oft-rasterize_attr.py -v %s -o %s -i %s -a %s",
+system(sprintf("python oft-rasterize_attr.py -v %s -o %s -i %s -a %s",
                "integrate_1516/utm_perte_2016.shp",
                "integrate_1516/utm_perte_2016.tif",
                "facet_2000_2014_filtrage5.tif",
@@ -72,7 +72,7 @@ system(sprintf("oft-rasterize_attr.py -v %s -o %s -i %s -a %s",
 
 ##########################################################################################
 ## Rasteriser les pertes 2015
-system(sprintf("oft-rasterize_attr.py -v %s -o %s -i %s -a %s",
+system(sprintf("python oft-rasterize_attr.py -v %s -o %s -i %s -a %s",
                "integrate_1516/utm_perte_2015.shp",
                "integrate_1516/utm_perte_2015.tif",
                "facet_2000_2014_filtrage5.tif",
