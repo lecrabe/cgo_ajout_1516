@@ -219,25 +219,27 @@ system(sprintf("gdal_translate -ot Byte -co COMPRESS=LZW %s %s",
                "cniaf_2000_2016_lossyear.tif"
 ))
 
-##########################################################################################
-## Calculer l'histograme des pertes
-system(sprintf("python oft-zonal_large_list.py -i %s -um %s -o %s -a %s",
-               paste0("cniaf_2000_2016_lossyear.tif"),
-               "limites_pays_officielles/DEPARTEMENTS_UTM33S.shp",
-               paste0("stats_cniaf_2000_2016.txt"),
-               "CDE_PR_FEC"
-               ))
+## --> PAS FONCTIONNEL DANS SEPAL
 
-code <- read.dbf("limites_pays_officielles/DEPARTEMENTS_UTM33S.dbf")
-
-######################### Statistiques pour le produit filtre
-df <- read.table("stats_cniaf_2000_2016.txt")
-names(df) <- c("dpt","total","non_perte",paste0("perte_ha_20",1:16))
-summary(df)
-df <- merge(df,code[c("CDE_PR_FEC","NOM_PR_FEC")],by.x="dpt",by.y="CDE_PR_FEC")
-df[,2:19] <- df[,2:19]*pix*pix/10000
-out <- df[,c(20,1,2:19)]
-out
-write.csv(out,"stats_dpt_cniaf_2000_2016.csv",row.names = F)
+# ##########################################################################################
+# ## Calculer l'histograme des pertes
+# system(sprintf("python oft-zonal_large_list.py -i %s -um %s -o %s -a %s",
+#                paste0("cniaf_2000_2016_lossyear.tif"),
+#                "limites_pays_officielles/DEPARTEMENTS_UTM33S.shp",
+#                paste0("stats_cniaf_2000_2016.txt"),
+#                "CDE_PR_FEC"
+#                ))
+# 
+# code <- read.dbf("limites_pays_officielles/DEPARTEMENTS_UTM33S.dbf")
+# 
+# ######################### Statistiques pour le produit filtre 
+# df <- read.table("stats_cniaf_2000_2016.txt")
+# names(df) <- c("dpt","total","non_perte",paste0("perte_ha_20",1:16))
+# summary(df)
+# df <- merge(df,code[c("CDE_PR_FEC","NOM_PR_FEC")],by.x="dpt",by.y="CDE_PR_FEC")
+# df[,2:19] <- df[,2:19]*pix*pix/10000
+# out <- df[,c(20,1,2:19)]
+# out
+# write.csv(out,"stats_dpt_cniaf_2000_2016.csv",row.names = F)
 
 
