@@ -216,7 +216,7 @@ system(sprintf("gdal_translate -ot Byte -co COMPRESS=LZW %s %s",
 
 ##########################################################################################
 ## Calculer l'histograme des pertes
-system(sprintf("oft-zonal_large_list.py -i %s -um %s -o %s -a %s",
+system(sprintf("python oft-zonal_large_list.py -i %s -um %s -o %s -a %s",
                paste0("cniaf_2000_2016_lossyear.tif"),
                "../limites_pays_officielles/DEPARTEMENTS_UTM33S.shp",
                paste0("stats_cniaf_2000_2016.txt"),
