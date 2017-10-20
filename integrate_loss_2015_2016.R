@@ -21,10 +21,9 @@ library(rgeos)
 ###########################################################################################
 
 ## Repertoire de travail
-setwd("/media/dannunzio/OSDisk/Users/dannunzio/Documents/countries/congo_brazza/data_congo/facet_2000_2014/")
+setwd("~/cgo_ajout_perte_1516/")
 
 ## Telecharger les donnees
-setwd("~/btn_ws_20170814/")
 system("wget https://www.dropbox.com/s/62ejfzw6v5fenry/ajout_perte1516.zip?dl=0")
 system("unzip ajout_perte1516.zip?dl=0" )
 
