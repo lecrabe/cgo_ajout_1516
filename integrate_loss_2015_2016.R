@@ -17,39 +17,44 @@ library(rgeos)
 
 
 ###########################################################################################
-##############################     SETUP YOUR DATA 
+##############################     PARAMETRAGE
 ###########################################################################################
 
 ## Repertoire de travail
 setwd("~/cgo_ajout_1516/")
 
 ## Telecharger les donnees
-system("wget https://www.dropbox.com/s/62ejfzw6v5fenry/ajout_perte1516.zip?dl=0")
+system("wget https://www.dropbox.com/s/hb6h1qr09lpeyj4/ajout_perte1516.zip?dl=0")
 system("unzip ajout_perte1516.zip?dl=0" )
 
-
-
+## Lire les pertes Terra-MAYOMBE
 shp_perte_2016 <- readOGR("terra_mayombe/pertes_2016/PERTES_DEBOISEMENT_pol.shp","PERTES_DEBOISEMENT_pol")
 shp_route_2016 <- readOGR("terra_mayombe/pertes_2016/ROUTES_DEBOISEES_pol.shp","ROUTES_DEBOISEES_pol")
 shp_perte_2015 <- readOGR("terra_mayombe/pertes_2015/dsf2015_clip_pol.shp","dsf2015_clip_pol")
 
+## Ajouter une colonne CODE pour l'année de perte
 shp_route_2016@data$code <- 16
 shp_perte_2016@data$code <- 16
 shp_perte_2015@data$code <- 15
 
+## Projeter en UTM
 prj_utm <- proj4string(raster("facet_2000_2014_filtrage5.tif"))
+
 utm_route_2016 <- spTransform(shp_route_2016,prj_utm)
 utm_perte_2016 <- spTransform(shp_perte_2016,prj_utm)
 utm_perte_2015 <- spTransform(shp_perte_2015,prj_utm)
 
+## Calculer les superficies
 utm_perte_2015@data$area_remi <- gArea(utm_perte_2015,byid = T)
 utm_perte_2016@data$area_remi <- gArea(utm_perte_2016,byid = T)
 utm_route_2016@data$area_remi <- gArea(utm_route_2016,byid = T)
 
+## Filtrer a 0.5 ha
 utm_perte_2015 <- utm_perte_2015[utm_perte_2015$area_remi > 5000,]
 utm_perte_2016 <- utm_perte_2016[utm_perte_2016$area_remi > 5000,]
 utm_route_2016 <- utm_route_2016[utm_route_2016$area_remi > 5000,]
 
+## Exporter
 writeOGR(utm_route_2016,"integrate_1516/utm_route_2016.shp","utm_route_2016","ESRI Shapefile",overwrite_layer = T)
 writeOGR(utm_perte_2016,"integrate_1516/utm_perte_2016.shp","utm_perte_2016","ESRI Shapefile",overwrite_layer = T)
 writeOGR(utm_perte_2015,"integrate_1516/utm_perte_2015.shp","utm_perte_2015","ESRI Shapefile",overwrite_layer = T)
@@ -218,12 +223,12 @@ system(sprintf("gdal_translate -ot Byte -co COMPRESS=LZW %s %s",
 ## Calculer l'histograme des pertes
 system(sprintf("python oft-zonal_large_list.py -i %s -um %s -o %s -a %s",
                paste0("cniaf_2000_2016_lossyear.tif"),
-               "../limites_pays_officielles/DEPARTEMENTS_UTM33S.shp",
+               "limites_pays_officielles/DEPARTEMENTS_UTM33S.shp",
                paste0("stats_cniaf_2000_2016.txt"),
                "CDE_PR_FEC"
                ))
 
-code <- read.dbf("../limites_pays_officielles/DEPARTEMENTS_UTM33S.dbf")
+code <- read.dbf("limites_pays_officielles/DEPARTEMENTS_UTM33S.dbf")
 
 ######################### Statistiques pour le produit filtre
 df <- read.table("stats_cniaf_2000_2016.txt")
