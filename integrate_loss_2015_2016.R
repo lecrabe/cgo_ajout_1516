@@ -21,7 +21,7 @@ library(rgeos)
 ###########################################################################################
 
 ## Repertoire de travail
-setwd("~/cgo_ajout_perte_1516/")
+setwd("~/cgo_ajout_1516/")
 
 ## Telecharger les donnees
 system("wget https://www.dropbox.com/s/62ejfzw6v5fenry/ajout_perte1516.zip?dl=0")
@@ -29,9 +29,9 @@ system("unzip ajout_perte1516.zip?dl=0" )
 
 
 
-shp_perte_2016 <- readOGR("../terra_mayombe/pertes_2016/PERTES_DEBOISEMENT_pol.shp","PERTES_DEBOISEMENT_pol")
-shp_route_2016 <- readOGR("../terra_mayombe/pertes_2016/ROUTES_DEBOISEES_pol.shp","ROUTES_DEBOISEES_pol")
-shp_perte_2015 <- readOGR("../terra_mayombe/pertes_2015/dsf2015_clip_pol.shp","dsf2015_clip_pol")
+shp_perte_2016 <- readOGR("terra_mayombe/pertes_2016/PERTES_DEBOISEMENT_pol.shp","PERTES_DEBOISEMENT_pol")
+shp_route_2016 <- readOGR("terra_mayombe/pertes_2016/ROUTES_DEBOISEES_pol.shp","ROUTES_DEBOISEES_pol")
+shp_perte_2015 <- readOGR("terra_mayombe/pertes_2015/dsf2015_clip_pol.shp","dsf2015_clip_pol")
 
 shp_route_2016@data$code <- 16
 shp_perte_2016@data$code <- 16
